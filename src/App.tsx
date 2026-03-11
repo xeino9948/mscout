@@ -2,6 +2,7 @@ import { SearchForm } from "@/components/SearchForm"
 import { ResultsGrid } from "@/components/ResultsGrid"
 import { useSearch } from "@/hooks/useSearch"
 import { BrandLogo } from "@/components/BrandLogo"
+import { HeroBrand } from "@/components/HeroBrand"
 import { PlatformMarquee } from "@/components/PlatformMarquee"
 import { ActivityIcon } from "lucide-react"
 import { AnimatePresence, motion } from "framer-motion"
@@ -17,7 +18,7 @@ export function App() {
       <header className="sticky top-0 z-30 border-b border-border/50 bg-background/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
           <BrandLogo size="sm" showTagline />
-          <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-muted-foreground">
+          <div className="flex items-center gap-1.5 text-[10px] tracking-widest text-muted-foreground uppercase">
             <ActivityIcon className="size-3" />
             <span>7 Platforms</span>
           </div>
@@ -27,7 +28,7 @@ export function App() {
       {/* Hero / Search */}
       <section
         className={`flex flex-col items-center justify-center px-6 transition-all duration-500 ease-out ${
-          hasResults ? "pb-8 pt-10" : "flex-1"
+          hasResults ? "pt-10 pb-8" : "flex-1 py-12"
         }`}
       >
         <AnimatePresence mode="wait">
@@ -36,40 +37,18 @@ export function App() {
               key="hero"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.4 }}
-              className="mb-8 flex flex-col items-center gap-6 text-center"
+              exit={{ opacity: 0, scale: 0.97 }}
+              transition={{ duration: 0.35, ease: "easeOut" }}
+              className="mb-10 flex flex-col items-center gap-8"
             >
-              {/* Brand mark */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-              >
-                <BrandLogo size="lg" />
-              </motion.div>
+              {/* 极致品牌展示 */}
+              <HeroBrand />
 
-              {/* Headline */}
-              <motion.div
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                className="flex flex-col gap-2"
-              >
-                <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
-                  Track music across platforms.
-                </h1>
-                <p className="max-w-md text-sm leading-relaxed text-muted-foreground">
-                  Search once, check availability on every major
-                  <br className="hidden sm:block" /> music service instantly.
-                </p>
-              </motion.div>
-
-              {/* Platform marquee */}
+              {/* 平台跑马灯 */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.45 }}
+                transition={{ duration: 0.6, delay: 1.6 }}
               >
                 <PlatformMarquee />
               </motion.div>
@@ -110,7 +89,7 @@ export function App() {
       {/* Footer */}
       <footer className="border-t border-border/30 px-6 py-4">
         <div className="mx-auto flex max-w-6xl items-center justify-center">
-          <span className="text-[10px] uppercase tracking-widest text-muted-foreground/50">
+          <span className="text-[10px] tracking-widest text-muted-foreground/50 uppercase">
             mscout — Music Scout
           </span>
         </div>
