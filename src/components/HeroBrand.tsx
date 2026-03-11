@@ -3,7 +3,8 @@ import { motion, AnimatePresence } from "framer-motion"
 import { LogoIcon } from "@/components/BrandLogo"
 
 // ─── 品牌名逐字符数据 ─────────────────────────────────────────
-const BRAND_CHARS = "mscout".split("")
+const BRAND_NAME = "Mscout"
+const BRAND_CHARS = BRAND_NAME.split("")
 
 // ─── 副标题关键词轮播 ─────────────────────────────────────────
 const ROTATING_WORDS = ["Scout", "Discover", "Track", "Verify", "Monitor"]
@@ -12,32 +13,103 @@ const ROTATING_WORDS = ["Scout", "Discover", "Track", "Verify", "Monitor"]
 const SPECTRUM_BARS = 48
 const SPECTRUM_BAR_DATA = Array.from({ length: SPECTRUM_BARS }, (_, i) => ({
   id: i,
-  // 生成伪随机的初始相位和振幅
-  phase: (i * 137.508) % 360, // 黄金角分布，视觉均匀
+  phase: (i * 137.508) % 360,
   amplitude: 0.3 + Math.sin(i * 0.5) * 0.4 + Math.random() * 0.3,
   speed: 1.5 + Math.random() * 2,
 }))
+
+// ─── M 字符的音符小粒子（装饰） ─────────────────────────────
+function MusicParticles() {
+  const particles = [
+    { x: -6, y: -20, delay: 2.0, dur: 2.8 },
+    { x: 14, y: -28, delay: 2.6, dur: 3.2 },
+    { x: -2, y: -34, delay: 3.4, dur: 2.5 },
+  ]
+
+  return (
+    <>
+      {particles.map((p, i) => (
+        <motion.span
+          key={i}
+          className="pointer-events-none absolute text-[0.18em] text-foreground/20"
+          style={{ left: `calc(50% + ${p.x}px)`, top: `${p.y}px` }}
+          initial={{ opacity: 0, y: 0 }}
+          animate={{
+            opacity: [0, 0.5, 0],
+            y: [0, -18, -30],
+          }}
+          transition={{
+            duration: p.dur,
+            delay: p.delay,
+            repeat: Infinity,
+            ease: "easeOut",
+          }}
+          aria-hidden="true"
+        >
+          &#9835;
+        </motion.span>
+      ))}
+    </>
+  )
+}
 
 // ─── 逐字符揭示的品牌名 ──────────────────────────────────────
 function BrandTitle() {
   return (
     <div className="flex items-baseline gap-[2px]">
-      {BRAND_CHARS.map((char, i) => (
-        <motion.span
-          key={i}
-          initial={{ opacity: 0, y: 40, rotateX: -90, filter: "blur(8px)" }}
-          animate={{ opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)" }}
-          transition={{
-            duration: 0.6,
-            delay: 0.3 + i * 0.08,
-            ease: [0.215, 0.61, 0.355, 1],
-          }}
-          className="inline-block text-[clamp(4rem,12vw,9rem)] font-bold leading-none tracking-tighter"
-          style={{ transformOrigin: "bottom center" }}
-        >
-          {char}
-        </motion.span>
-      ))}
+      {BRAND_CHARS.map((char, i) => {
+        const isM = i === 0
+
+        return (
+          <motion.span
+            key={i}
+            initial={{ opacity: 0, y: 40, rotateX: -90, filter: "blur(8px)" }}
+            animate={{ opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)" }}
+            transition={{
+              duration: isM ? 0.8 : 0.6,
+              delay: 0.3 + i * 0.08,
+              ease: [0.215, 0.61, 0.355, 1],
+            }}
+            className={`inline-block text-[clamp(4rem,12vw,9rem)] font-bold leading-none tracking-tighter ${
+              isM ? "relative" : ""
+            }`}
+            style={{ transformOrigin: "bottom center" }}
+          >
+            {isM ? (
+              <>
+                {/* M 字符 — 特殊待遇：底部装饰线 + 微妙持续动效 + 音符粒子 */}
+                <motion.span
+                  className="relative inline-block"
+                  animate={{ y: [0, -3, 0] }}
+                  transition={{
+                    duration: 3,
+                    delay: 1.5,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                >
+                  {char}
+                  {/* 底部品牌标识线 */}
+                  <motion.span
+                    className="absolute -bottom-1 left-0 h-[3px] w-full rounded-full bg-foreground"
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{
+                      duration: 0.4,
+                      delay: 0.3 + BRAND_CHARS.length * 0.08 + 0.3,
+                      ease: [0.25, 0.46, 0.45, 0.94],
+                    }}
+                    style={{ transformOrigin: "left center" }}
+                  />
+                </motion.span>
+                <MusicParticles />
+              </>
+            ) : (
+              char
+            )}
+          </motion.span>
+        )
+      })}
 
       {/* 光标闪烁 */}
       <motion.span
@@ -98,7 +170,7 @@ function RotatingKeyword() {
   }, [])
 
   return (
-    <span className="relative inline-flex h-[1.4em] w-[5.5ch] items-center justify-start overflow-hidden">
+    <span className="relative inline-flex h-[1.4em] w-[8ch] items-center justify-start overflow-hidden">
       <AnimatePresence mode="wait">
         <motion.span
           key={ROTATING_WORDS[index]}

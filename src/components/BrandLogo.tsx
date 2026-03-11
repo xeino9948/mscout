@@ -62,7 +62,7 @@ export function BrandLogo({
             isLarge ? "text-xl" : "text-sm"
           )}
         >
-          mscout
+          Mscout
         </span>
         {showTagline && (
           <span

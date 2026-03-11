@@ -90,7 +90,7 @@ export function App() {
       <footer className="border-t border-border/30 px-6 py-4">
         <div className="mx-auto flex max-w-6xl items-center justify-center">
           <span className="text-[10px] tracking-widest text-muted-foreground/50 uppercase">
-            mscout — Music Scout
+            Mscout — Music Scout
           </span>
         </div>
       </footer>

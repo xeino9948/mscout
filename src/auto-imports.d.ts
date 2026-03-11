@@ -9,6 +9,7 @@ declare global {
   const Activity: typeof import('react').Activity
   const BrandLogo: typeof import('./components/BrandLogo').BrandLogo
   const Fragment: typeof import('react').Fragment
+  const HeroBrand: typeof import('./components/HeroBrand').HeroBrand
   const Link: typeof import('react-router-dom').Link
   const LogoIcon: typeof import('./components/BrandLogo').LogoIcon
   const NavLink: typeof import('react-router-dom').NavLink
