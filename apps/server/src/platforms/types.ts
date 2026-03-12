@@ -1,82 +1,23 @@
 /**
  * 音乐平台适配器类型定义
  *
- * 适配器模式设计要点：
- * 1. 所有平台实现统一的 MusicPlatformAdapter 接口
- * 2. 通过 AbstractMusicPlatformAdapter 基类提供公共逻辑（超时、错误处理、请求封装）
- * 3. 各平台只需关注：构造请求 URL/Header + 解析响应数据
- * 4. 支持认证扩展：适配器可选实现 authenticate() 方法
+ * 共享类型（SearchQuery, SongInfo, QualityInfo 等）从 @mscout/shared 引用
+ * 适配器专有类型（Config, Auth, Interface, Abstract Class）在此定义
  */
 
-// ============================================================
-// 搜索查询与结果类型
-// ============================================================
+// 从 shared 包重导出共享类型，保持后端其他文件的 import 路径不变
+export type {
+  SearchQuery,
+  SongInfo,
+  QualityInfo,
+  PlatformId,
+  PlatformSearchResult,
+  AggregatedSearchResponse,
+  PlatformInfo,
+  PlatformInfoResponse,
+} from "@mscout/shared";
 
-/** 搜索查询参数 */
-export interface SearchQuery {
-  song: string;
-  artist: string;
-}
-
-/** 标准化的歌曲信息 */
-export interface SongInfo {
-  /** 歌曲在原平台的 ID */
-  id: string | number;
-  /** 歌曲名 */
-  name: string;
-  /** 歌手列表 */
-  artists: string[];
-  /** 专辑名 */
-  album: string;
-  /** 时长（秒） */
-  duration: number;
-  /** 封面图 URL */
-  cover?: string;
-  /** 试听/播放 URL */
-  previewUrl?: string;
-  /** 音质信息 */
-  quality?: QualityInfo;
-  /** 平台原始数据（用于前端展示平台特有字段） */
-  extra?: Record<string, unknown>;
-}
-
-/** 音质信息 */
-export interface QualityInfo {
-  /** 是否有标准品质 (128kbps) */
-  standard?: boolean;
-  /** 是否有高品质 (320kbps) */
-  high?: boolean;
-  /** 是否有无损品质 (FLAC) */
-  lossless?: boolean;
-  /** 是否有超高品质 (Hi-Res) */
-  hires?: boolean;
-}
-
-// ============================================================
-// 平台适配器接口
-// ============================================================
-
-/** 支持的平台 ID（可用 string literal union 限定，也可动态注册） */
-export type PlatformId = string;
-
-/** 单个平台的搜索结果 */
-export interface PlatformSearchResult {
-  platform: PlatformId;
-  status: "success" | "error" | "timeout";
-  /** 请求耗时（ms） */
-  duration: number;
-  /** 成功时的歌曲列表 */
-  data?: SongInfo[];
-  /** 失败时的错误信息 */
-  error?: string;
-}
-
-/** 聚合搜索响应 */
-export interface AggregatedSearchResponse {
-  query: SearchQuery;
-  timestamp: number;
-  results: Record<PlatformId, PlatformSearchResult>;
-}
+import type { SearchQuery, SongInfo, PlatformId } from "@mscout/shared";
 
 // ============================================================
 // 适配器配置

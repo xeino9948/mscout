@@ -1,9 +1,17 @@
+import { hc } from "hono/client";
+import type { AppType } from "@mscout/server";
 import type {
   AggregatedSearchResponse,
   PlatformInfoResponse,
-} from "@/types/api"
+} from "@mscout/shared";
 
-const API_BASE = "/api"
+/**
+ * 类型安全的 API 客户端（基于 Hono RPC）
+ *
+ * hc 会自动从后端路由推断请求/响应类型，无需手动维护
+ * base URL 为空字符串，通过 Vite proxy 转发到后端
+ */
+const client = hc<AppType>("/");
 
 /** 搜索歌曲 — POST /api/search */
 export async function searchSongs(
@@ -11,27 +19,29 @@ export async function searchSongs(
   artist: string,
   signal?: AbortSignal
 ): Promise<AggregatedSearchResponse> {
-  const res = await fetch(`${API_BASE}/search`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ song, artist }),
-    signal,
-  })
+  const res = await client.api.search.$post(
+    {
+      json: { song, artist },
+    },
+    { init: { signal } }
+  );
 
   if (!res.ok) {
-    throw new Error(`搜索失败: ${res.status} ${res.statusText}`)
+    throw new Error(`搜索失败: ${res.status} ${res.statusText}`);
   }
 
-  return res.json()
+  return res.json() as Promise<AggregatedSearchResponse>;
 }
 
 /** 获取平台列表 — GET /api/platforms */
 export async function getPlatforms(): Promise<PlatformInfoResponse> {
-  const res = await fetch(`${API_BASE}/platforms`)
+  const res = await client.api.platforms.$get();
 
   if (!res.ok) {
-    throw new Error(`Failed to fetch platforms: ${res.status} ${res.statusText}`)
+    throw new Error(
+      `Failed to fetch platforms: ${res.status} ${res.statusText}`
+    );
   }
 
-  return res.json()
+  return res.json() as Promise<PlatformInfoResponse>;
 }

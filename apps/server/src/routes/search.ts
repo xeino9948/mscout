@@ -1,70 +1,56 @@
 import { Hono } from "hono";
+import { zValidator } from "@hono/zod-validator";
+import { z } from "zod";
 import type { PlatformRegistry } from "../platforms/registry.js";
-import type { AggregatedSearchResponse } from "../platforms/types.js";
+import type { AggregatedSearchResponse } from "@mscout/shared";
+
+/** 搜索请求体的 zod schema */
+const searchSchema = z.object({
+  song: z.string().min(1, "缺少必填参数: song (歌曲名)"),
+  artist: z.string().optional().default(""),
+});
 
 /**
- * 创建搜索路由
+ * 创建搜索路由（链式写法，支持 Hono RPC 类型推导）
  *
  * API 端点：
  * - POST /search   搜索歌曲（歌曲名 + 歌手）
  * - GET  /platforms 获取所有平台信息
  */
 export function createSearchRoutes(registry: PlatformRegistry) {
-  const app = new Hono();
+  return new Hono()
+    .post("/search", zValidator("json", searchSchema), async (c) => {
+      const { song, artist } = c.req.valid("json");
 
-  /**
-   * POST /search
-   *
-   * 请求体: { "song": "晴天", "artist": "周杰伦" }
-   * 响应: AggregatedSearchResponse
-   */
-  app.post("/search", async (c) => {
-    const body = await c.req.json<{ song?: string; artist?: string }>();
+      const query = { song: song.trim(), artist: artist.trim() };
 
-    const song = body.song?.trim();
-    const artist = body.artist?.trim();
+      console.log(
+        `[Search] 开始搜索: "${query.song}" - "${query.artist}"`
+      );
+      const startTime = Date.now();
 
-    if (!song) {
-      return c.json({ error: "缺少必填参数: song (歌曲名)" }, 400);
-    }
+      const results = await registry.searchAll(query);
 
-    const query = { song, artist: artist ?? "" };
+      const totalDuration = Date.now() - startTime;
+      const platformCount = Object.keys(results).length;
+      const successCount = Object.values(results).filter(
+        (r) => r.status === "success"
+      ).length;
 
-    console.log(
-      `[Search] 开始搜索: "${query.song}" - "${query.artist}"`
-    );
-    const startTime = Date.now();
+      console.log(
+        `[Search] 搜索完成: ${successCount}/${platformCount} 平台成功, 总耗时 ${totalDuration}ms`
+      );
 
-    const results = await registry.searchAll(query);
+      const response: AggregatedSearchResponse = {
+        query,
+        timestamp: Date.now(),
+        results,
+      };
 
-    const totalDuration = Date.now() - startTime;
-    const platformCount = Object.keys(results).length;
-    const successCount = Object.values(results).filter(
-      (r) => r.status === "success"
-    ).length;
-
-    console.log(
-      `[Search] 搜索完成: ${successCount}/${platformCount} 平台成功, 总耗时 ${totalDuration}ms`
-    );
-
-    const response: AggregatedSearchResponse = {
-      query,
-      timestamp: Date.now(),
-      results,
-    };
-
-    return c.json(response);
-  });
-
-  /**
-   * GET /platforms
-   *
-   * 返回所有已注册平台的信息
-   */
-  app.get("/platforms", (c) => {
-    const platforms = registry.getAllPlatformInfo();
-    return c.json({ platforms });
-  });
-
-  return app;
+      return c.json(response);
+    })
+    .get("/platforms", (c) => {
+      const platforms = registry.getAllPlatformInfo();
+      return c.json({ platforms });
+    });
 }

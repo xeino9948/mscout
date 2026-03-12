@@ -1,21 +1,29 @@
 {
-  "name": "music-api-proxy",
-  "version": "0.0.1",
+  "name": "@mscout/server",
   "private": true,
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc --project tsconfig.json",
     "start": "node dist/index.js",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "deploy": "wrangler deploy"
+  },
+  "exports": {
+    ".": "./src/app.ts"
   },
   "dependencies": {
+    "@mscout/shared": "workspace:*",
     "hono": "^4.7.0",
-    "@hono/node-server": "^1.19.0"
+    "@hono/node-server": "^1.19.0",
+    "@hono/zod-validator": "^0.5.0",
+    "zod": "^3.25.0"
   },
   "devDependencies": {
     "typescript": "~5.9.3",
     "@types/node": "^24.10.1",
-    "tsx": "^4.19.0"
+    "tsx": "^4.19.0",
+    "wrangler": "^4.0.0"
   }
 }
