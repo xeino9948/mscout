@@ -153,7 +153,7 @@ function BrandTitle() {
   )
 }
 
-// ─── 音频频谱可视化（hover 激活增强）─────────────────────────
+// ─── 音频频谱可视化（始终显示，hover 增强）─────────────────────────
 function AudioSpectrum() {
   const [isHovered, setIsHovered] = useState(false)
 
@@ -169,8 +169,8 @@ function AudioSpectrum() {
           className="w-[3px] rounded-full transition-colors duration-300"
           style={{
             backgroundColor: isHovered
-              ? `oklch(0.6 0.15 ${(bar.phase + 200) % 360} / 0.25)`
-              : "oklch(0 0 0 / 0.08)",
+              ? `oklch(0.6 0.18 ${(bar.phase + 200) % 360} / 0.4)`
+              : `oklch(0.6 0.15 ${(bar.phase + 200) % 360} / 0.25)`,
           }}
           initial={{ height: 4 }}
           animate={{
@@ -182,16 +182,15 @@ function AudioSpectrum() {
                   bar.amplitude * 64 + 12,
                 ]
               : [
-                  4,
-                  bar.amplitude * 56 + 8,
-                  bar.amplitude * 24 + 4,
-                  bar.amplitude * 48 + 12,
-                  4,
+                  bar.amplitude * 48 + 8,
+                  bar.amplitude * 24 + 6,
+                  bar.amplitude * 56 + 12,
+                  bar.amplitude * 48 + 8,
                 ],
           }}
           transition={{
-            duration: isHovered ? bar.speed * 0.5 : bar.speed,
-            delay: isHovered ? (bar.phase / 360) * 0.3 : (bar.phase / 360) * 2,
+            duration: isHovered ? bar.speed * 0.5 : bar.speed * 0.7,
+            delay: (bar.phase / 360) * 0.5,
             repeat: Infinity,
             ease: "easeInOut",
           }}
