@@ -9,9 +9,10 @@ import type {
  * 类型安全的 API 客户端（基于 Hono RPC）
  *
  * hc 会自动从后端路由推断请求/响应类型，无需手动维护
- * base URL 为空字符串，通过 Vite proxy 转发到后端
+ * 开发环境通过 Vite proxy 走 "/"，生产环境使用 VITE_API_URL 环境变量
  */
-const client = hc<AppType>("/");
+const API_BASE = import.meta.env.VITE_API_URL || "/";
+const client = hc<AppType>(API_BASE);
 
 /** 搜索歌曲 — POST /api/search */
 export async function searchSongs(
