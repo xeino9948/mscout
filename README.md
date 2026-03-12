@@ -15,7 +15,7 @@ Search once, see results from 7 music platforms — instantly.
 </div>
 
 ---
-
+![ss](./assets/pic/music_hajimi.png)
 ## What is Mscout?
 
 Mscout (Music Scout) searches multiple music platforms in parallel and shows you where a song is available, along with quality info, duration, album art, and more — all in one view.
