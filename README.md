@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="./assets/pic/mscout-mascot.png" alt="Mscout Mascot" width="360" />
+
 # Mscout
 
 **Cross-platform music availability checker.**
@@ -15,10 +17,20 @@ Search once, see results from 7 music platforms — instantly.
 </div>
 
 ---
-![ss](./assets/pic/music_hajimi.png)
+
 ## What is Mscout?
 
 Mscout (Music Scout) searches multiple music platforms in parallel and shows you where a song is available, along with quality info, duration, album art, and more — all in one view.
+
+<div align="center">
+  <img src="./assets/pic/website-preview.png" alt="Mscout Homepage" width="720" />
+  <p><em>Homepage — Brand showcase with audio spectrum visualizer</em></p>
+</div>
+
+<div align="center">
+  <img src="./assets/pic/search-result-preview.png" alt="Mscout Search Results" width="720" />
+  <p><em>Search Results — Cross-platform availability at a glance</em></p>
+</div>
 
 ### Supported Platforms
 
@@ -151,10 +163,4 @@ pnpm deploy
 
 ## Star History
 
-<a href="https://www.star-history.com/?repos=index-null%2Fmscout&type=date&legend=bottom-right">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/image?repos=index-null/mscout&type=date&theme=dark&legend=bottom-right" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/image?repos=index-null/mscout&type=date&legend=bottom-right" />
-   <img alt="Star History Chart" src="https://api.star-history.com/image?repos=index-null/mscout&type=date&legend=bottom-right" />
- </picture>
-</a>
+[![Star History Chart](https://api.star-history.com/svg?repos=index-null/mscout&type=date)](https://www.star-history.com/#index-null/mscout&type=date)
